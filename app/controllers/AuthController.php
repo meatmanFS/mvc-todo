@@ -10,8 +10,8 @@ class AuthController extends Controller {
 	
 	public function check() {
 		$user = new User();		
-		if( $user->get_auth_user() ){
-			return true;
+		if( $_user = $user->get_auth_user() ){
+			return $_user;
 		}
 		$this->redirect( '/login' );
 	}
@@ -25,6 +25,18 @@ class AuthController extends Controller {
 			'username' , 'username_err',
 			'password', 'password_err' ,
 		]) );
+	}
+	
+	public function logout(){
+		setcookie("id", null, -1);
+		setcookie("hash", null, -1 );
+		$user = new User();
+		$auth_user = $user->get_auth_user();
+		if( $auth_user ){
+			$auth_user->user_hash = '';
+			$auth_user->save();			
+		}
+		$this->redirect( '/login' );
 	}
 	
 	public function auth(){

@@ -6,10 +6,10 @@
 				<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#">Link</a>
+				<a class="nav-link" href="/archive">Archive</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link disabled" href="#">Disabled</a>
+				<a class="nav-link disabled" href="/logout">Logout</a>
 			</li>
 		</ul>
 	</div>

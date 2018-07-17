@@ -7,7 +7,7 @@
 		<hr />
 		<div class="card">
 			<div class="card-body">
-				<form method="POST" action="/projects" >
+				<form method="POST" action="/projects/<?php echo $project_id; ?>" >
 					<div class="form-group <?php echo (!empty($project_name_err)) ? 'has-error' : ''; ?>">
 						<label for="project_name">Name</label>
 						<input type="text" class="form-control" name="project_name" placeholder="Project name" value="<?php echo $project_name; ?>">
@@ -18,7 +18,7 @@
 						<input type="color"  class="form-control" name="project_color"  value="<?php echo $project_color; ?>" />
 						<span class="help-block"><?php echo $project_color_err; ?></span>
 					</div>					
-					<button type="submit" class="btn btn-primary">Add</button>
+					<button type="submit" class="btn btn-primary">Edit</button>
 					<button type="reset" class="btn btn-secondary">Cancel</button>
 				</form>		
 			</div>

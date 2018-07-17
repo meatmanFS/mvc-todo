@@ -38,14 +38,17 @@ class DB {
 		}
 	}
 		
-	public function connect_db() {
-		$connection = new \mysqli(
-			$this->server
-			, $this->user_name
-			, $this->password
-			, $this->db_name
-		);
-		
+	public function connect_db() {		
+		try {
+			$connection = new \mysqli(
+				$this->server
+				, $this->user_name
+				, $this->password
+				, $this->db_name
+			);
+		} catch (\Exception $exc) {
+			
+		}
 		if( !mysqli_connect_errno() ){
 			$this->is_db_ok = true;
 			$this->connection = $connection;

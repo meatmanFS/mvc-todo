@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-sm-4">
-		<p><a href="/"><strong>Today</strong> <small><?php echo count($tasks); ?></small></a></p>
+		<p><a href="/"><strong>Today</strong></a></p>
 		<p><a href="/next-7-days"><strong>Next 7 days</strong></a></p>
 		<h3>Projects</h3>
 		<?php if( !empty( $projects ) ): ?>			
@@ -35,7 +35,7 @@
 	<div class="col-sm-8">
 		<div class="jumbotron">
 			<h2>
-				Today <?php echo date( 'd M' ); ?>				
+				Archive	
 			</h2>
 			<?php if( !empty( $tasks ) ): ?>				
 			<ul class="list-group">
@@ -43,7 +43,7 @@
 				<li class="list-group-item">
 					<div class="row">
 						<div class="col-7">							
-						<span class="task-state" style="background-color: <?php echo $task->state_color(); ?>"></span>
+						<span class="task-state" style="background-color: <?php echo $task->state_color(); ?>"></span>						
 						<span class="name"><?php echo $task->name; ?></span>
 						<span class="due-date">(<?php echo date( 'd M H:i', strtotime($task->end_date) ); ?>)</span>
 						</div>

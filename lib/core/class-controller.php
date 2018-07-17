@@ -7,6 +7,7 @@ class Controller extends Core {
 	
 	protected $app_config;
 	protected $base_url;
+	protected $middleware_data;
 	
 	protected function setup(){
 		$this->base_url = $this->app_config->config->get_base_url();
@@ -54,8 +55,10 @@ class Controller extends Core {
 			$controller = $this->check_controller_code( $this->middleware );
 			if( $controller ){
 				$result = call_user_func( array( $controller->controller, $controller->controller_method ) );
-				if( true !== $result ){
-					return $result;
+				if( !empty( $result ) ){
+					$this->middleware_data = $result;
+				} else {
+					return true;
 				}
 			}
 		}

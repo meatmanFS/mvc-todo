@@ -1,18 +1,18 @@
 <div class="row">
 	<div class="col-sm-4">
-		<p><a href="/"><strong>Today</strong> <small><?php echo count($tasks); ?></small></a></p>
+		<p><a href="/"><strong>Today</strong></small></a></p>
 		<p><a href="/next-7-days"><strong>Next 7 days</strong></a></p>
 		<h3>Projects</h3>
 		<?php if( !empty( $projects ) ): ?>			
 		<ul class="list-group">
 			<?php foreach ( $projects as $project ): ?>				
-			<li class="list-group-item">
+			<li class="list-group-item <?php echo ( $_project->get_id() == $project->get_id() )? 'list-group-item-success': false; ?>">
 				<a href="/projects/<?php echo $project->get_id(); ?>">
 					<span class="project-color" style="background-color: <?php echo $project->color; ?>"></span>
 					<span class="name"><?php echo $project->name; ?></span>
 					<?php if( !empty( $project->tasks ) ): ?>
 					<small><?php echo count((array)$project->tasks); ?></small>					
-					<?php endif; ?>
+					<?php endif; ?>					
 				</a>
 				<div class="dropdown show float-right">
 					<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -35,7 +35,7 @@
 	<div class="col-sm-8">
 		<div class="jumbotron">
 			<h2>
-				Today <?php echo date( 'd M' ); ?>				
+				Task for project: <?php echo $_project->name; ?>
 			</h2>
 			<?php if( !empty( $tasks ) ): ?>				
 			<ul class="list-group">
@@ -50,8 +50,8 @@
 						<div class="col-5">							
 							<div class="row">
 								<div class="col-6 project">
-									<span class="project-color" style="background-color: <?php echo $task->projects->color; ?>"></span>
-									<span class="name"><?php echo $task->projects->name; ?></span>
+									<span class="project-color" style="background-color: <?php echo $_project->color; ?>"></span>
+									<span class="name"><?php echo $_project->name; ?></span>
 								</div>
 								<div class="col-6">
 									<div class="dropdown show float-right">

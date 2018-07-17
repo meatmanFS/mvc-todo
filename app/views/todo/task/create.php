@@ -10,10 +10,10 @@
 					<div class="form-group">
 						<label for="task_name">Name</label>
 						<input type="text" class="form-control" name="task_name" placeholder="Task name">
-					</div>					
+					</div>	
 					<div class="form-group">
 						<label for="task_name">Due date</label>
-						<input type="text" class="form-control datepicker" name="task_end_date" placeholder="Task End date">
+						<input type="datetime-local" class="form-control" name="task_end_date" placeholder="Task End date">
 					</div>	
 					<div class="form-group">
 						<label for="task_project">Select project</label>						

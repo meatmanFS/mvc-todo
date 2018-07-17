@@ -15,7 +15,7 @@
 					</div>								
 					<div class="form-group <?php echo (!empty($task_end_date_err)) ? 'has-error' : ''; ?>">
 						<label for="task_name">Due date</label>
-						<input type="text" class="form-control datepicker" name="task_end_date" placeholder="Task End date" value="<?php echo $task_end_date; ?>">
+						<input type="datetime-local" class="form-control" name="task_end_date" placeholder="Task End date" value="<?php echo $task_end_date; ?>">
 						<span class="help-block"><?php echo $task_end_date_err; ?></span>
 					</div>	
 					<div class="form-group <?php echo (!empty($task_project_err)) ? 'has-error' : ''; ?>">
@@ -23,7 +23,7 @@
 						<?php if( !empty( $projects ) ): ?>		
 							<select class="form-control" name="task_project">
 							<?php foreach ( $projects as $project ): ?>				
-							<option value="<?php echo $project->get_id(); ?>"><?php echo $project->name; ?></option>
+							<option value="<?php echo $project->get_id(); ?>" <?php echo ( $task_project == $project->get_id() )? 'selected="selected"': false; ?>><?php echo $project->name; ?></option>
 							<?php endforeach; ?>
 							</select>
 						<?php else: ?>		

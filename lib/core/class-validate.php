@@ -62,6 +62,15 @@ class Validate {
 							} 
 						} 
 					break;					
+					case 'datetime':
+						if( !empty( $this->input[ $input ] ) ){
+							$date = \DateTime::createFromFormat('Y-m-d\TH:i', $this->input[ $input ] );
+							$date_errors = \DateTime::getLastErrors();
+							if ($date_errors['warning_count'] + $date_errors['error_count'] > 0) {
+								$input_validation[ $rule ] = false;
+							}
+						} 
+					break;					
 					default :
 						$parts = explode( ':', $rule );
 						if( count( $parts ) == 2 ){

@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-sm-4">
-		<p><a href="/"><strong>Today</strong> <small><?php echo count($tasks); ?></small></a></p>
+		<p><a href="/"><strong>Today</strong></a></p>
 		<p><a href="/next-7-days"><strong>Next 7 days</strong></a></p>
 		<h3>Projects</h3>
 		<?php if( !empty( $projects ) ): ?>			
@@ -35,7 +35,14 @@
 	<div class="col-sm-8">
 		<div class="jumbotron">
 			<h2>
-				Today <?php echo date( 'd M' ); ?>				
+				<?php 
+					$date = new \DateTimeImmutable();
+					$next_day = new \DateInterval("P1D");
+					$date_from = $date->add( $next_day );
+					$next_7days = new \DateInterval("P7D");
+					$date_to = $date->add( $next_7days );
+				?>
+				From <?php echo $date_from->format('d M'); ?> To <?php echo $date_to->format('d M'); ?>		
 			</h2>
 			<?php if( !empty( $tasks ) ): ?>				
 			<ul class="list-group">
@@ -43,7 +50,7 @@
 				<li class="list-group-item">
 					<div class="row">
 						<div class="col-7">							
-						<span class="task-state" style="background-color: <?php echo $task->state_color(); ?>"></span>
+						<span class="task-state" style="background-color: <?php echo $task->state_color(); ?>"></span>						
 						<span class="name"><?php echo $task->name; ?></span>
 						<span class="due-date">(<?php echo date( 'd M H:i', strtotime($task->end_date) ); ?>)</span>
 						</div>

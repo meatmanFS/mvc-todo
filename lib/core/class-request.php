@@ -88,8 +88,12 @@ class Request {
 		if( preg_match( '/({(.+?)})/i', $route, $matches ) ){
 			$route_pattern = preg_replace( '/{(.+?)}/i', '(.+)', $route );
 			$route_pattern = str_replace( '/', '\/', $route_pattern );
-			$route_pattern = "/^$route_pattern/";
+			$route_pattern = "/^$route_pattern$/";
 			if( preg_match( $route_pattern, $this->current_request, $route_matches ) ){
+				$is_there_url_parst = explode( "/", $route_matches[1] );
+				if( count( $is_there_url_parst ) > 1 ){
+					return false;
+				}
 				$this->route_parts[ $matches[2] ] = $route_matches[1];
 				return true;
 			}

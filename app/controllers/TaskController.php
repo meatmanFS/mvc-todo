@@ -14,7 +14,9 @@ class TaskController extends Controller {
 	
 	public function create() {
 		$project = new Project();
-		$projects = $project->get_many();
+		$projects = $project->get_many(array(
+			'user_id'	=> $this->middleware_data->get_id()
+		));
 		return View::get( 'todo/task/create', 'main', compact([
 			'projects'
 		]));
@@ -29,7 +31,7 @@ class TaskController extends Controller {
 			'task_name' => 'required|string'
 		) );
 		$validate->add_rule( array(
-			'task_end_date' => 'required|string|date:yy-mm-dd'
+			'task_end_date' => 'required|string|datetime'
 		) );
 		$validate->add_rule( array(
 			'task_project' => 'required|number'
@@ -65,7 +67,9 @@ class TaskController extends Controller {
 			$task_priority_err = '';
 			
 			$project = new Project();
-			$projects = $project->get_many();
+			$projects = $project->get_many(array(
+				'user_id'	=> $this->middleware_data->get_id()
+			));
 			return View::get( 'todo/task/store', 'main', compact( [
 				'task_name', 'task_end_date', 'task_project', 'task_priority',
 				'task_name_err', 'task_end_date_err', 'task_project_err',
@@ -115,7 +119,9 @@ class TaskController extends Controller {
 			}
 			
 			$project = new Project();
-			$projects = $project->get_many();
+			$projects = $project->get_many(array(
+				'user_id'	=> $this->middleware_data->get_id()
+			));
 			return View::get( 'todo/task/store', 'main', compact([
 				'task_name', 'task_end_date', 'task_project', 'task_priority',
 				'task_name_err', 'task_end_date_err', 'task_project_err',
@@ -125,6 +131,7 @@ class TaskController extends Controller {
 	}
 	
 	public function edit( $id ) {
+		$this->check_user($id);
 		$page_title = 'Edit Task';
 		$_task = new Task();
 		$result = $_task->get( array(
@@ -134,7 +141,9 @@ class TaskController extends Controller {
 		) );	
 		if( $result ){
 			$project = new Project();
-			$projects = $project->get_many();
+			$projects = $project->get_many(array(
+				'user_id'	=> $this->middleware_data->get_id()
+			));
 			$task_name = $_task->name;
 			$task_end_date = $_task->end_date;
 			$task_project = $_task->project_id;
@@ -157,6 +166,7 @@ class TaskController extends Controller {
 	
 	public function update( $id ) {
 		$page_title = 'Edit Task';
+		$this->check_user($id);
 		$input = $this->post_input( ['task_name', 'task_end_date', 'task_project', 'task_priority'] );
 		$user_input = $input->get_input();
 		$validate = $this->validate( $input );
@@ -207,7 +217,9 @@ class TaskController extends Controller {
 			$task_priority_err = '';
 			
 			$project = new Project();
-			$projects = $project->get_many();
+			$projects = $project->get_many(array(
+				'user_id'	=> $this->middleware_data->get_id()
+			));
 			return View::get( 'todo/task/edit', 'main', compact( [
 				'task_name', 'task_end_date', 'task_project', 'task_priority',
 				'task_name_err', 'task_end_date_err', 'task_project_err',
@@ -257,7 +269,9 @@ class TaskController extends Controller {
 			}
 			
 			$project = new Project();
-			$projects = $project->get_many();
+			$projects = $project->get_many(array(
+				'user_id'	=> $this->middleware_data->get_id()
+			));
 			return View::get( 'todo/task/edit', 'main', compact([
 				'task_name', 'task_end_date', 'task_project', 'task_priority',
 				'task_name_err', 'task_end_date_err', 'task_project_err',
@@ -267,6 +281,7 @@ class TaskController extends Controller {
 	}
 	
 	public function delete( $id ) {
+		$this->check_user($id);
 		$task = new Task();
 		$result = $task->get( array(
 			'id'	=> $id
@@ -275,6 +290,32 @@ class TaskController extends Controller {
 			$task->delete();
 		}
 		$this->redirect( '/' );			
+	}
+	
+	public function done( $id ) {
+		$this->check_user($id);
+		$task = new Task();
+		$result = $task->get( array(
+			'id'	=> $id
+		), array( 'id' ) );
+		if( $result ){
+			$task->state = 1;
+			$task->save();
+		}
+		$this->redirect( '/' );			
+	}
+	
+	public function check_user( $id ) {
+		$task = new Task();
+		$result = $task->get( array(
+			'id'	=> $id
+		), array(
+			'id' , 'name' ,'project_id', 'priority', 'end_date', 'user_id'
+		) );
+		if( $result && $task->user_id != $this->middleware_data->get_id() ){
+			View::page_401();
+		}		
+		return false;
 	}
 
 }

@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use Lib\Core\Model;
+use App\Models\Task;
 
 class Project extends Model {
-	public $fields = ['name' ,'color'];
+	public $fields = ['name' ,'color', 'user_id'];
 	
 	
 	public function get_many( $params = false ) {
@@ -28,6 +29,14 @@ class Project extends Model {
 		} else {
 			return false;
 		}
+	}
+	
+	public function has_many() {
+		return new Task();
+	}
+		
+	public function get_has_many_field(){
+		return 'project_id';
 	}
 	
 }

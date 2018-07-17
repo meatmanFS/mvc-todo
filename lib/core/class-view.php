@@ -27,10 +27,15 @@ class View extends Core {
 		$this->views_lauout_dir = "{$this->app_config->views_path}layouts{$ds}";
 			
 		$this->template_404 = "{$this->default_templates}404.html";
+		$this->template_401 = "{$this->default_templates}401.html";
 	}
 	
 	public function get_template_404(){
 		return $this->template_404;
+	}
+	
+	public function get_template_401(){
+		return $this->template_401;
 	}
 	
 	public static function instance(){
@@ -107,6 +112,14 @@ class View extends Core {
 	public static function page_404(){
 		if( file_exists( self::instance()->get_template_404() ) ) {
 			echo file_get_contents( self::instance()->get_template_404() );
+			die();
+		}
+	}
+	
+	public static function page_401(){
+		if( file_exists( self::instance()->get_template_401() ) ) {
+			echo file_get_contents( self::instance()->get_template_401() );
+			die();
 		}
 	}
 }

@@ -6,6 +6,16 @@ return array(
 		'method'	=> 'GET',
 		'handler'	=> 'TodoAppController@index',
 	),
+	array(
+		'route'		=> '/next-7-days',
+		'method'	=> 'GET',
+		'handler'	=> 'TodoAppController@next7d',
+	),
+	array(
+		'route'		=> '/archive',
+		'method'	=> 'GET',
+		'handler'	=> 'TodoAppController@archive',
+	),
 	// tasks
 	array(
 		'route'		=> '/tasks/create',
@@ -28,6 +38,11 @@ return array(
 		'handler'	=> 'TaskController@delete',
 	),
 	array(
+		'route'		=> '/tasks/{id}/done',
+		'method'	=> 'GET',
+		'handler'	=> 'TaskController@done',
+	),
+	array(
 		'route'		=> '/tasks/{id}',
 		'method'	=> 'POST',
 		'handler'	=> 'TaskController@update',
@@ -39,15 +54,40 @@ return array(
 		'handler'	=> 'ProjectController@create',
 	),
 	array(
+		'route'		=> '/projects/{id}',
+		'method'	=> 'GET',
+		'handler'	=> 'ProjectController@show',
+	),
+	array(
 		'route'		=> '/projects',
 		'method'	=> 'POST',
 		'handler'	=> 'ProjectController@store',
+	),
+	array(
+		'route'		=> '/projects/{id}/edit',
+		'method'	=> 'GET',
+		'handler'	=> 'ProjectController@edit',
+	),
+	array(
+		'route'		=> '/projects/{id}/delete',
+		'method'	=> 'GET',
+		'handler'	=> 'ProjectController@delete',
+	),
+	array(
+		'route'		=> '/projects/{id}',
+		'method'	=> 'POST',
+		'handler'	=> 'ProjectController@update',
 	),
 	// login
 	array(
 		'route'		=> '/login',
 		'method'	=> 'GET',
 		'handler'	=> 'AuthController@login',
+	),
+	array(
+		'route'		=> '/logout',
+		'method'	=> 'GET',
+		'handler'	=> 'AuthController@logout',
 	),
 	array(
 		'route'		=> '/login',
